@@ -1,0 +1,60 @@
+# Following properties are mandatory when engine files are not specified:
+#   int8-calib-file(Only in INT8)
+#   Caffemodel mandatory properties: model-file, proto-file, output-blob-names
+#
+# Mandatory properties for detectors:
+#   num-detected-classes
+#
+# Following properties are always recommended:
+#   batch-size(Default=1)
+#
+# Other optional properties:
+#   net-scale-factor(Default=1), network-mode(Default=0 i.e FP32),
+#   model-color-format(Default=0 i.e. RGB) model-engine-file, labelfile-path,
+#   mean-file, gie-unique-id(Default=0), offsets, process-mode (Default=1 i.e. primary),
+#   custom-lib-path, network-mode(Default=0 i.e FP32)
+#
+# The values in the config file are overridden by values set through GObject
+# properties.
+
+# Gst-nvinfer 插件根据网络要求对输入帧执行转换（格式转换和缩放），并将转换后的数据传递给低级库。
+# 低级库对转换后的帧进行预处理（执行归一化和均值减法）并生成最终的浮点 RGB/BGR/GRAY 平面数据，该数据传递给 TensorRT 引擎进行推理。低级库生成的输出类型取决于网络类型
+# y=net-scale-factor*(x-mean)
+
+[property]
+# 多个GPU的情况下，元件所使用的GPU设备ID
+gpu-id=0
+# 低级库对转换后的帧进行预处理（执行归一化和均值减法）并生成最终的浮点 RGB/BGR/GRAY 平面数据，该数据传递给 TensorRT 引擎进行推理。低级库生成的输出类型取决于网络类型
+# y=net-scale-factor*(x-mean)
+net-scale-factor=0.0039215697906911373
+# caffe 模型文件路径
+model-file=../../../../samples/models/Primary_Detector/resnet10.caffemodel
+proto-file=../../../../samples/models/Primary_Detector/resnet10.prototxt
+# 模型预先生成的序列化引擎文件的绝对路径，如果有这个就不在看 model文件
+model-engine-file=../../../../samples/models/Primary_Detector/resnet10.caffemodel_b1_gpu0_fp16.engine
+labelfile-path=../../../../samples/models/Primary_Detector/labels.txt
+# 当模型降低到8位时，验证的库
+int8-calib-file=../../../../samples/models/Primary_Detector/cal_trt.bin
+force-implicit-batch-dim=1
+batch-size=1
+
+# Integer
+# 0: FP32
+# 1: INT8
+# 2: FP16
+network-mode=1
+num-detected-classes=4
+# 推理时要跳过的连续批数
+interval=0
+# 要分配给 nvinfer 实例的唯一组件 ID。用于标识由实例生成的元数据
+gie-unique-id=1
+# 输出检测内容的元数据名字
+output-blob-names=conv2d_bbox;conv2d_cov/Sigmoid
+
+[class-attrs-all]
+# 目标检测阈值
+pre-cluster-threshold=0.2
+# DBSCAN algorithm 聚和算法参数
+eps=0.2
+# 矩形合并的阈值
+group-threshold=1
