@@ -20,7 +20,9 @@ $ docker run -it --rm --net=host --runtime nvidia -e DISPLAY=$DISPLAY -v /tmp/ar
 $ python3 camera_jetson_infer.py
 
 #### This will generate the TensorRT engine file with .engine, then Open your /dev/video0 camera and push the stream to your local network
-#### The Nvidia Jestson Nano is the server(192.168.8.115), my Win10 PC is the client(192.168.8.121)
+#### The Nvidia Jestson Nano is the server(192.168.8.115), port:8554
+#### My Win10 PC is the client(192.168.8.121), we can use easyPlayer app, VCL Player app or rtsp_pull.py to pull the rtsp stream
+#### Have a funny day!
 
 
 <img width="1063" alt="WX20230416-094143@2x" src="https://user-images.githubusercontent.com/56700281/232261635-89c8264b-86f7-4bd7-bf9f-87c20496812f.png">
