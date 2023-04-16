@@ -1,6 +1,6 @@
-# Jetson-Object-Detection
-### Using Jetson-Inference to do cars, persons, bikes and road signs detection
-### This demo runs on Nvidia Jetson Nano and using a CSI camera
+# Jetson Object Detection
+#### Using Jetson-Inference to do cars, persons, bikes and road signs detection
+#### This demo runs on Nvidia Jetson Nano and using a CSI camera
 
 ### Pull the docker image for deepstream python version
 $ docker pull ryagi997/deepstream-6.0-python:samples
